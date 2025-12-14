@@ -1,6 +1,665 @@
-html5
-nghmgh
-g
-mhgmhg
-mh
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pymepedia | Inteligencia de Negocios para PyMEs</title>
+    <meta name="description" content="Plataforma líder de recursos, herramientas financieras y estrategias de crecimiento para pequeñas y medianas empresas.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <!-- Configuración personalizada de Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            900: '#0f172a', // Slate 900 - Darker, more premium
+                            800: '#1e293b',
+                            700: '#334155',
+                            50: '#f8fafc',
+                        },
+                        accent: {
+                            500: '#f97316', // Orange 500
+                            600: '#ea580c',
+                            400: '#fb923c',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'], // Más geométrica y moderna que Inter
+                        serif: ['"Playfair Display"', 'serif'], // Más elegante
+                    },
+                    boxShadow: {
+                        'soft': '0 20px 40px -15px rgba(0, 0, 0, 0.05)',
+                        'xl': '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+                        'glow': '0 0 20px rgba(249, 115, 22, 0.3)',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Estilos base refinados */
+        body {
+            background-color: #ffffff;
+            color: #334155;
+        }
+        
+        /* Navbar Scrolled State */
+        .nav-scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+        }
+
+        .nav-transparent {
+            background: transparent;
+            border-bottom: 1px solid transparent;
+        }
+
+        /* Gradientes modernos */
+        .text-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(to right, #0f172a, #334155);
+        }
+        
+        .bg-gradient-primary {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        }
+
+        /* Patrón de fondo sutil */
+        .bg-grid-slate {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(148, 163, 184, 0.1) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(148, 163, 184, 0.1) 1px, transparent 1px);
+            mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+        }
+
+        /* Estilo para el input de búsqueda */
+        .search-input {
+            transition: width 0.3s ease;
+        }
+        .search-input:focus {
+            width: 250px;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-accent-500 selection:text-white">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 transition-all duration-300 nav-transparent" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center cursor-pointer group" onclick="window.scrollTo(0,0)">
+                    <div class="w-10 h-10 bg-accent-500 rounded-lg flex items-center justify-center text-white mr-3 shadow-lg group-hover:scale-105 transition-transform duration-300">
+                        <i class="fa-solid fa-layer-group text-xl"></i>
+                    </div>
+                    <div>
+                        <span class="font-serif font-bold text-2xl text-brand-900 tracking-tight block leading-none">Pymepedia</span>
+                        <span class="text-[10px] uppercase tracking-widest text-gray-500 font-semibold">Business Intelligence</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-1 items-center">
+                    <a href="#articulos" class="text-gray-600 hover:text-brand-900 font-medium transition px-4 py-2 rounded-full hover:bg-gray-50">Biblioteca</a>
+                    <a href="#herramientas" class="text-gray-600 hover:text-brand-900 font-medium transition px-4 py-2 rounded-full hover:bg-gray-50">Herramientas</a>
+                    <a href="#cursos" class="text-gray-600 hover:text-brand-900 font-medium transition px-4 py-2 rounded-full hover:bg-gray-50">Academy</a>
+                    <div class="h-6 w-px bg-gray-200 mx-2"></div>
+                    
+                    <!-- Search Input -->
+                    <div class="relative flex items-center">
+                        <input type="text" id="search-desktop" placeholder="Buscar recursos..." class="search-input w-0 px-0 py-2 rounded-full text-sm border-2 border-transparent focus:border-accent-500 focus:w-64 transition-all duration-300 focus:pl-10 focus:pr-4 placeholder-gray-400 bg-gray-50/70 focus:bg-white" onfocus="this.previousElementSibling.style.opacity = '1'" onblur="if(this.value === '') { this.previousElementSibling.style.opacity = '0.5'; this.classList.remove('focus:pl-10', 'focus:w-64'); this.classList.add('w-0', 'px-0'); } else { this.previousElementSibling.style.opacity = '1'; }">
+                        <button class="text-gray-500 hover:text-accent-600 transition p-3 absolute right-0" onclick="document.getElementById('search-desktop').focus()">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </div>
+
+                    <a href="#" class="ml-2 bg-brand-900 text-white px-6 py-2.5 rounded-full font-semibold hover:bg-brand-800 transition shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 text-sm">
+                        Acceso Socios
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-brand-900 focus:outline-none p-2">
+                        <i class="fa-solid fa-bars-staggered text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Panel -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white/95 backdrop-blur-xl border-t border-gray-100 absolute w-full shadow-2xl transition-all duration-300 origin-top transform">
+            <div class="px-6 py-8 space-y-4">
+                <a href="#articulos" class="block text-lg font-medium text-gray-800 hover:text-accent-600">Biblioteca</a>
+                <a href="#herramientas" class="block text-lg font-medium text-gray-800 hover:text-accent-600">Herramientas</a>
+                <a href="#cursos" class="block text-lg font-medium text-gray-800 hover:text-accent-600">Academy</a>
+                <hr class="border-gray-100 my-4">
+                <div class="relative flex items-center mb-4">
+                    <input type="text" placeholder="Buscar recursos..." class="w-full px-5 py-3 rounded-lg border border-gray-300 text-sm focus:border-accent-500 focus:ring-accent-500 pr-10">
+                    <i class="fa-solid fa-magnifying-glass absolute right-3 text-gray-400"></i>
+                </div>
+                <a href="#" class="block w-full text-center bg-brand-900 text-white px-6 py-3 rounded-lg font-bold shadow-md">Iniciar Sesión</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+        <!-- Background Elements -->
+        <div class="absolute inset-0 bg-grid-slate -z-10"></div>
+        <div class="absolute top-0 right-0 -mr-20 -mt-20 w-[600px] h-[600px] bg-accent-500/5 rounded-full blur-3xl -z-10"></div>
+        <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-3xl -z-10"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="lg:grid lg:grid-cols-12 lg:gap-16 items-center">
+                <!-- Text Content -->
+                <div class="lg:col-span-6 lg:text-left text-center animate-fade-in-up">
+                    <div class="inline-flex items-center px-4 py-1.5 rounded-full border border-gray-200 bg-white shadow-sm text-gray-600 text-sm font-medium mb-8 hover:border-accent-500/50 hover:shadow-md transition cursor-pointer group">
+                        <span class="w-2 h-2 rounded-full bg-accent-500 mr-2 animate-pulse"></span>
+                        Nuevo Reporte 2024: Tendencias PyME
+                        <i class="fa-solid fa-arrow-right ml-2 text-xs text-gray-400 group-hover:text-accent-500 transition-colors"></i>
+                    </div>
+                    
+                    <h1 class="text-5xl lg:text-6xl tracking-tight font-bold text-brand-900 font-serif leading-[1.1] mb-6">
+                        Construye una empresa <br>
+                        <span class="relative inline-block text-accent-500">
+                            a prueba de futuro
+                            <svg class="absolute w-full h-3 -bottom-1 left-0 text-accent-200 opacity-50" viewBox="0 0 200 9" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.00025 6.99997C25.7501 2.49994 132.5 -3.50004 198 2.00004" stroke="currentColor" stroke-width="3"/></svg>
+                        </span>
+                    </h1>
+                    
+                    <p class="mt-6 text-xl text-gray-600 leading-relaxed font-light max-w-2xl mx-auto lg:mx-0">
+                        La plataforma de inteligencia definitiva para fundadores. Accede a recursos legales, financieros y de marketing validados por expertos de industria.
+                    </p>
+                    
+                    <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        <a href="#registro" class="inline-flex items-center justify-center px-8 py-4 text-base font-bold rounded-xl text-white bg-accent-600 hover:bg-accent-500 shadow-lg shadow-accent-500/30 hover:shadow-accent-500/50 transition-all duration-300 hover:-translate-y-1">
+                            Comenzar Prueba Gratuita
+                        </a>
+                        <a href="#demo" class="inline-flex items-center justify-center px-8 py-4 border border-gray-200 text-base font-bold rounded-xl text-gray-700 bg-white hover:bg-gray-50 hover:border-gray-300 transition-all duration-300 shadow-sm hover:shadow-md">
+                            <i class="fa-solid fa-play mr-2 text-accent-500 text-xs"></i> Ver Demo
+                        </a>
+                    </div>
+                    
+                    <div class="mt-8 flex items-center justify-center lg:justify-start gap-6 text-sm text-gray-500 font-medium">
+                        <div class="flex items-center"><i class="fa-solid fa-check text-green-500 mr-2"></i> Sin tarjeta de crédito</div>
+                        <div class="flex items-center"><i class="fa-solid fa-check text-green-500 mr-2"></i> Cancela cuando quieras</div>
+                    </div>
+                </div>
+                
+                <!-- Image/Visual -->
+                <div class="mt-16 lg:mt-0 lg:col-span-6 relative perspective-1000">
+                    <!-- Main Card -->
+                    <div class="relative rounded-2xl bg-white shadow-2xl border border-gray-100 p-2 lg:rotate-y-12 lg:rotate-z-2 transform transition duration-500 hover:rotate-0 hover:scale-105 z-20 animate-float">
+                        <img class="rounded-xl w-full object-cover shadow-inner" src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" alt="Dashboard de Pymepedia" onerror="this.src='https://placehold.co/800x600/f8fafc/cbd5e1?text=Dashboard+Analytics'">
+                        
+                        <!-- Floating Badge 1 -->
+                        <div class="absolute -left-8 top-10 bg-white p-4 rounded-xl shadow-xl border border-gray-50 flex items-center gap-3 animate-pulse">
+                            <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600">
+                                <i class="fa-solid fa-arrow-trend-up"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-500 font-semibold uppercase">Crecimiento</p>
+                                <p class="text-lg font-bold text-gray-900">+127%</p>
+                            </div>
+                        </div>
+
+                        <!-- Floating Badge 2 -->
+                        <div class="absolute -right-6 bottom-20 bg-brand-900 p-4 rounded-xl shadow-xl border border-gray-700 flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-accent-500 flex items-center justify-center text-white text-xs">
+                                <i class="fa-solid fa-check"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-300">Auditoría Legal</p>
+                                <p class="text-sm font-bold text-white">Completada</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Decor elements -->
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-gradient-to-tr from-accent-200 to-blue-200 rounded-full blur-[100px] opacity-20 -z-10"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trusted By Section -->
+    <section class="py-10 border-y border-gray-100 bg-gray-50/50">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-sm font-semibold text-gray-400 uppercase tracking-widest mb-8">Empoderando a más de 50,000 empresas</p>
+            <div class="flex flex-wrap justify-center gap-8 md:gap-16 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
+                <!-- Logos ficticios con FontAwesome como placeholder visual -->
+                <div class="flex items-center gap-2 text-xl font-bold text-gray-600"><i class="fa-brands fa-stripe text-3xl"></i> Stripe</div>
+                <div class="flex items-center gap-2 text-xl font-bold text-gray-600"><i class="fa-brands fa-aws text-3xl"></i> Amazon</div>
+                <div class="flex items-center gap-2 text-xl font-bold text-gray-600"><i class="fa-brands fa-google text-2xl"></i> Google</div>
+                <div class="flex items-center gap-2 text-xl font-bold text-gray-600"><i class="fa-brands fa-shopify text-3xl"></i> Shopify</div>
+                <div class="flex items-center gap-2 text-xl font-bold text-gray-600"><i class="fa-brands fa-slack text-3xl"></i> Slack</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories / Features (Biblioteca) -->
+    <section id="articulos" class="py-24 bg-white relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-accent-600 font-bold tracking-wider text-sm uppercase">Recursos Integrales</span>
+                <h2 class="mt-3 text-4xl font-serif font-bold text-brand-900">
+                    Tu equipo externo de consultoría
+                </h2>
+                <p class="mt-4 text-lg text-gray-600">
+                    No necesitas contratar un CFO o un director de marketing todavía. Pymepedia te da las herramientas para operar como una corporación desde el día uno.
+                </p>
+            </div>
+
+            <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+                
+                <!-- Feature Card 1 -->
+                <div class="group relative p-8 bg-white rounded-3xl border border-gray-100 shadow-soft hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                    <div class="absolute inset-0 bg-gradient-to-br from-blue-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-3xl"></div>
+                    <div class="relative z-10">
+                        <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center text-blue-600 text-2xl mb-6 group-hover:scale-110 transition-transform duration-300">
+                            <i class="fa-solid fa-scale-balanced"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-brand-900 font-serif mb-3">Legal & Compliance</h3>
+                        <p class="text-gray-600 mb-6 leading-relaxed">
+                            Modelos de contratos blindados, guías de impuestos actualizadas al 2024 y checklists para evitar multas laborales.
+                        </p>
+                        <a href="#" class="inline-flex items-center font-bold text-brand-900 group-hover:text-accent-600 transition-colors">
+                            Acceder a documentos <i class="fa-solid fa-arrow-right ml-2 text-sm transform group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Feature Card 2 -->
+                <div class="group relative p-8 bg-white rounded-3xl border border-gray-100 shadow-soft hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                    <div class="absolute inset-0 bg-gradient-to-br from-orange-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-3xl"></div>
+                    <div class="relative z-10">
+                        <div class="w-14 h-14 bg-orange-100 rounded-2xl flex items-center justify-center text-accent-600 text-2xl mb-6 group-hover:scale-110 transition-transform duration-300">
+                            <i class="fa-solid fa-chart-line"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-brand-900 font-serif mb-3">Growth Marketing</h3>
+                        <p class="text-gray-600 mb-6 leading-relaxed">
+                            Playbooks de adquisición de clientes, plantillas de email marketing y estrategias SEO para dominar tu nicho local.
+                        </p>
+                        <a href="#" class="inline-flex items-center font-bold text-brand-900 group-hover:text-accent-600 transition-colors">
+                            Ver estrategias <i class="fa-solid fa-arrow-right ml-2 text-sm transform group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Feature Card 3 -->
+                <div class="group relative p-8 bg-white rounded-3xl border border-gray-100 shadow-soft hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                    <div class="absolute inset-0 bg-gradient-to-br from-purple-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-3xl"></div>
+                    <div class="relative z-10">
+                        <div class="w-14 h-14 bg-purple-100 rounded-2xl flex items-center justify-center text-purple-600 text-2xl mb-6 group-hover:scale-110 transition-transform duration-300">
+                            <i class="fa-solid fa-microchip"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-brand-900 font-serif mb-3">Tech Stack</h3>
+                        <p class="text-gray-600 mb-6 leading-relaxed">
+                            Comparativas honestas de software CRM, ERPs para PyMEs y tutoriales prácticos de Inteligencia Artificial.
+                        </p>
+                        <a href="#" class="inline-flex items-center font-bold text-brand-900 group-hover:text-accent-600 transition-colors">
+                            Explorar herramientas <i class="fa-solid fa-arrow-right ml-2 text-sm transform group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Tools Section (Herramientas) -->
+    <section id="herramientas" class="py-24 bg-brand-900 relative overflow-hidden">
+        <!-- Abstract Shapes -->
+        <div class="absolute top-0 right-0 w-1/2 h-full bg-brand-800 skew-x-12 opacity-50 pointer-events-none"></div>
+        <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-accent-600 rounded-full blur-[120px] opacity-20 pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+                <div class="max-w-2xl">
+                    <h2 class="text-accent-500 font-bold tracking-wide uppercase text-sm mb-2">Herramientas Web</h2>
+                    <h2 class="text-3xl md:text-4xl font-serif font-bold text-white">
+                        Automatiza tareas aburridas <br> en segundos.
+                    </h2>
+                </div>
+                <a href="#" class="text-white hover:text-accent-400 font-medium transition flex items-center group">
+                    Ver todas las herramientas <i class="fa-solid fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform"></i>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Tool 1 -->
+                <div class="bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/10 hover:bg-white/10 hover:border-accent-500/50 transition-all duration-300 group cursor-pointer">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="p-3 bg-brand-800 rounded-lg group-hover:bg-accent-500 transition-colors">
+                            <i class="fa-solid fa-calculator text-white text-lg"></i>
+                        </div>
+                        <span class="px-2 py-1 bg-white/10 rounded text-xs text-white font-medium">Finanzas</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-accent-400 transition-colors">Calculadora Break-Even</h3>
+                    <p class="text-gray-400 text-sm mb-4 line-clamp-2">Determina el volumen de ventas exacto para cubrir tus costos fijos y variables.</p>
+                    <div class="w-full h-1 bg-white/10 rounded-full overflow-hidden">
+                        <div class="h-full bg-accent-500 w-0 group-hover:w-full transition-all duration-700"></div>
+                    </div>
+                </div>
+
+                <!-- Tool 2 -->
+                <div class="bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/10 hover:bg-white/10 hover:border-accent-500/50 transition-all duration-300 group cursor-pointer">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="p-3 bg-brand-800 rounded-lg group-hover:bg-accent-500 transition-colors">
+                            <i class="fa-solid fa-shield-halved text-white text-lg"></i>
+                        </div>
+                        <span class="px-2 py-1 bg-white/10 rounded text-xs text-white font-medium">Legal</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-accent-400 transition-colors">Generador de Privacidad</h3>
+                    <p class="text-gray-400 text-sm mb-4 line-clamp-2">Crea políticas GDPR/CCPA listas para copiar y pegar en tu sitio web.</p>
+                    <div class="w-full h-1 bg-white/10 rounded-full overflow-hidden">
+                        <div class="h-full bg-accent-500 w-0 group-hover:w-full transition-all duration-700"></div>
+                    </div>
+                </div>
+
+                <!-- Tool 3 -->
+                <div class="bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/10 hover:bg-white/10 hover:border-accent-500/50 transition-all duration-300 group cursor-pointer">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="p-3 bg-brand-800 rounded-lg group-hover:bg-accent-500 transition-colors">
+                            <i class="fa-solid fa-file-invoice-dollar text-white text-lg"></i>
+                        </div>
+                        <span class="px-2 py-1 bg-white/10 rounded text-xs text-white font-medium">Gestión</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-accent-400 transition-colors">Plantilla Cash Flow 360</h3>
+                    <p class="text-gray-400 text-sm mb-4 line-clamp-2">Excel avanzado con macros para proyección de flujo de caja a 12 meses.</p>
+                    <div class="w-full h-1 bg-white/10 rounded-full overflow-hidden">
+                        <div class="h-full bg-accent-500 w-0 group-hover:w-full transition-all duration-700"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Academy Section (Cursos) -->
+    <section id="cursos" class="py-24 bg-white relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-purple-600 font-bold tracking-wider text-sm uppercase">Pymepedia Academy</span>
+                <h2 class="mt-3 text-4xl font-serif font-bold text-brand-900">
+                    Aprende de los mejores, sin salir de tu oficina
+                </h2>
+                <p class="mt-4 text-lg text-gray-600">
+                    Cursos modulares y prácticos diseñados por fundadores de startups exitosas y expertos en el ecosistema PyME.
+                </p>
+            </div>
+
+            <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+                
+                <!-- Course Card 1: Fundamentos Financieros -->
+                <div class="overflow-hidden rounded-2xl shadow-xl border border-gray-100 bg-white group hover:shadow-2xl transition-shadow duration-300">
+                    <img src="https://images.unsplash.com/photo-1544717305-ad2d19ae1a55?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=300&q=80" alt="Curso Finanzas" class="w-full h-48 object-cover group-hover:scale-[1.02] transition-transform duration-500">
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="px-3 py-1 text-xs font-semibold bg-green-100 text-green-800 rounded-full">Nivel Básico</span>
+                            <div class="flex items-center text-sm text-gray-500">
+                                <i class="fa-solid fa-clock mr-1"></i> 6 Módulos
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold text-brand-900 font-serif mb-2">Fundamentos Financieros para CEOs</h3>
+                        <p class="text-gray-600 text-sm mb-4 line-clamp-2">Domina el balance general y el estado de resultados para tomar decisiones inteligentes.</p>
+                        <a href="#" class="inline-flex items-center font-bold text-accent-600 hover:text-accent-500 transition-colors">
+                            Inscribirme Ahora <i class="fa-solid fa-chevron-right ml-2 text-xs transform group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Course Card 2: Marketing Digital Avanzado -->
+                <div class="overflow-hidden rounded-2xl shadow-xl border border-gray-100 bg-white group hover:shadow-2xl transition-shadow duration-300">
+                    <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=300&q=80" alt="Curso Marketing" class="w-full h-48 object-cover group-hover:scale-[1.02] transition-transform duration-500">
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="px-3 py-1 text-xs font-semibold bg-orange-100 text-orange-800 rounded-full">Nivel Intermedio</span>
+                            <div class="flex items-center text-sm text-gray-500">
+                                <i class="fa-solid fa-clock mr-1"></i> 8 Lecciones
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold text-brand-900 font-serif mb-2">Estrategia Paid Media (Ads y Retargeting)</h3>
+                        <p class="text-gray-600 text-sm mb-4 line-clamp-2">Optimiza tu presupuesto de publicidad para conseguir leads calificados y reducir el CAC.</p>
+                        <a href="#" class="inline-flex items-center font-bold text-accent-600 hover:text-accent-500 transition-colors">
+                            Inscribirme Ahora <i class="fa-solid fa-chevron-right ml-2 text-xs transform group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Course Card 3: Optimización Operacional -->
+                <div class="overflow-hidden rounded-2xl shadow-xl border border-gray-100 bg-white group hover:shadow-2xl transition-shadow duration-300">
+                    <img src="https://images.unsplash.com/photo-1516321497487-e288ad7be10c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=300&q=80" alt="Curso Operaciones" class="w-full h-48 object-cover group-hover:scale-[1.02] transition-transform duration-500">
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="px-3 py-1 text-xs font-semibold bg-blue-100 text-blue-800 rounded-full">Nivel Avanzado</span>
+                            <div class="flex items-center text-sm text-gray-500">
+                                <i class="fa-solid fa-clock mr-1"></i> 10 Horas
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold text-brand-900 font-serif mb-2">Lean Management y Reducción de Costos</h3>
+                        <p class="text-gray-600 text-sm mb-4 line-clamp-2">Implementa metodologías Lean para eliminar desperdicios y mejorar la eficiencia del equipo.</p>
+                        <a href="#" class="inline-flex items-center font-bold text-accent-600 hover:text-accent-500 transition-colors">
+                            Inscribirme Ahora <i class="fa-solid fa-chevron-right ml-2 text-xs transform group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-16">
+                <a href="#" class="inline-flex items-center justify-center px-10 py-4 text-base font-bold rounded-xl text-white bg-brand-900 hover:bg-brand-800 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5">
+                    Explorar el Catálogo Completo de Cursos
+                </a>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Testimonials (Modern Card Style) -->
+    <section class="py-24 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-center text-3xl font-serif font-bold text-brand-900 mb-16">Lo que dicen los fundadores</h2>
+            
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <!-- Testimonial Image Side -->
+                <div class="relative">
+                    <div class="absolute -inset-4 bg-gradient-to-r from-accent-500 to-pink-500 rounded-2xl opacity-20 blur-lg transform rotate-2"></div>
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Founder" class="relative rounded-2xl shadow-2xl w-full object-cover h-[400px]">
+                    <div class="absolute bottom-6 left-6 bg-white/90 backdrop-blur p-4 rounded-lg shadow-lg max-w-xs">
+                        <p class="font-bold text-brand-900">Laura González</p>
+                        <p class="text-sm text-gray-500">CEO, EcoDiseño Latam</p>
+                    </div>
+                </div>
+
+                <!-- Testimonial Content Side -->
+                <div class="md:pl-10">
+                    <i class="fa-solid fa-quote-left text-5xl text-gray-200 mb-6"></i>
+                    <blockquote class="text-2xl font-serif font-medium text-brand-900 leading-relaxed mb-8">
+                        "Pymepedia democratizó el acceso a consultoría de alto nivel. Lo que antes me costaba miles en asesores, ahora lo resuelvo con sus guías y plantillas en minutos. Es el ROI más alto de mi negocio."
+                    </blockquote>
+                    <div class="flex items-center gap-4">
+                        <div class="flex text-yellow-400 text-sm">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <span class="text-gray-400 text-sm">|</span>
+                        <span class="text-gray-500 text-sm font-medium">Miembro desde 2021</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA / Newsletter (Floating Box) -->
+    <section class="py-24 px-4">
+        <div class="max-w-5xl mx-auto relative">
+            <div class="absolute inset-0 bg-gradient-to-r from-brand-900 to-brand-800 rounded-3xl transform rotate-1"></div>
+            <div class="relative bg-brand-900 rounded-3xl p-8 md:p-16 overflow-hidden shadow-2xl">
+                <!-- Background Pattern -->
+                <div class="absolute top-0 right-0 w-64 h-64 bg-accent-500 rounded-full blur-[80px] opacity-20 -mr-16 -mt-16"></div>
+                
+                <div class="text-center relative z-10">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white font-serif mb-4">
+                        Tu competencia ya está aquí.
+                    </h2>
+                    <p class="text-lg text-gray-300 max-w-2xl mx-auto mb-10">
+                        Únete a la comunidad de élite con más de 50,000 fundadores. Recibe el "Monday Brief" con tácticas accionables, no spam.
+                    </p>
+                    
+                    <form class="max-w-md mx-auto flex flex-col sm:flex-row gap-3" onsubmit="event.preventDefault(); document.getElementById('cta-message').textContent='¡Gracias por suscribirte!'; document.getElementById('cta-message').classList.remove('hidden'); this.reset();">
+                        <input type="email" placeholder="tu@empresa.com" required class="flex-1 px-5 py-4 rounded-xl border-0 focus:ring-2 focus:ring-accent-500 bg-white/10 text-white placeholder-gray-400 backdrop-blur-sm">
+                        <button type="submit" class="px-8 py-4 bg-accent-600 hover:bg-accent-500 text-white font-bold rounded-xl transition shadow-lg hover:shadow-accent-500/40">
+                            Suscribirme Gratis
+                        </button>
+                    </form>
+                    <p id="cta-message" class="mt-4 text-sm text-green-400 hidden font-bold">¡Gracias por suscribirte!</p>
+                    <p class="mt-4 text-xs text-gray-500">Datos protegidos bajo estándares bancarios. <a href="#" class="underline hover:text-white">Política de Privacidad</a>.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer (Enterprise Style) -->
+    <footer class="bg-white pt-16 border-t border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
+                <div class="col-span-2">
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="w-8 h-8 bg-brand-900 rounded flex items-center justify-center text-white text-sm">
+                             <i class="fa-solid fa-layer-group"></i>
+                        </div>
+                        <span class="font-serif font-bold text-xl text-brand-900">Pymepedia</span>
+                    </div>
+                    <p class="text-gray-500 text-sm leading-relaxed max-w-xs mb-6">
+                        Facilitando el camino del emprendimiento en Hispanoamérica con tecnología, educación y comunidad.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-600 hover:bg-accent-500 hover:text-white transition"><i class="fa-brands fa-linkedin-in"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-600 hover:bg-accent-500 hover:text-white transition"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-600 hover:bg-accent-500 hover:text-white transition"><i class="fa-brands fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-brand-900 mb-4">Explora</h4>
+                    <ul class="space-y-3 text-sm text-gray-600">
+                        <li><a href="#" class="hover:text-accent-600 transition">Guías Legales</a></li>
+                        <li><a href="#" class="hover:text-accent-600 transition">Estrategias de Venta</a></li>
+                        <li><a href="#" class="hover:text-accent-600 transition">Transformación Digital</a></li>
+                        <li><a href="#" class="hover:text-accent-600 transition">Casos de Éxito</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-brand-900 mb-4">Herramientas</h4>
+                    <ul class="space-y-3 text-sm text-gray-600">
+                        <li><a href="#" class="hover:text-accent-600 transition">Calculadoras</a></li>
+                        <li><a href="#" class="hover:text-accent-600 transition">Generadores de Docs</a></li>
+                        <li><a href="#" class="hover:text-accent-600 transition">Plantillas Excel</a></li>
+                        <li><a href="#" class="hover:text-accent-600 transition">API para Devs</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-brand-900 mb-4">Empresa</h4>
+                    <ul class="space-y-3 text-sm text-gray-600">
+                        <li><a href="#" class="hover:text-accent-600 transition">Sobre Nosotros</a></li>
+                        <li><a href="#" class="hover:text-accent-600 transition">Contactar Soporte</a></li>
+                        <li><a href="#" class="hover:text-accent-600 transition">Publicidad</a></li>
+                        <li><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">Contratando</span></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-100 py-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
+                <p>&copy; 2024 Pymepedia Inc. Todos los derechos reservados.</p>
+                <div class="flex gap-6 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-brand-900">Términos</a>
+                    <a href="#" class="hover:text-brand-900">Privacidad</a>
+                    <a href="#" class="hover:text-brand-900">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 10) {
+                navbar.classList.add('nav-scrolled');
+                navbar.classList.remove('nav-transparent');
+            } else {
+                navbar.classList.add('nav-transparent');
+                navbar.classList.remove('nav-scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // Intersection Observer for fade-in animations
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('opacity-100', 'translate-y-0');
+                        entry.target.classList.remove('opacity-0', 'translate-y-10');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            // Apply to sections (selects the content div inside each section)
+            document.querySelectorAll('section > div').forEach((el) => {
+                // Exclude the hero section, which has a specific animation
+                if (el.closest('section').id !== '') { 
+                     el.classList.add('transition-all', 'duration-1000', 'opacity-0', 'translate-y-10');
+                     observer.observe(el);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
